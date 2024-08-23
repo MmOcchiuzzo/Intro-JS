@@ -20,11 +20,14 @@ async function displayExchanges() {
     document.body.appendChild(list);
 
     if (exchanges.length > 0) {
-        exchanges.slice(0, 16).forEach(({ name = 'N/A', volume_1hrs_usd = 0, volume_1day_usd = 0 }) => {
+        const items = exchanges.slice(0, 16).map(({ name = 'N/A', volume_1hrs_usd = 0, volume_1day_usd = 0 }) => {
             const listItem = document.createElement('li');
-            listItem.textContent = `Nombre: ${name}, Cotización por hora: ${volume_1hrs_usd.toFixed(2)} USD, Cotización del día: ${volume_1day_usd.toFixed(2)} USD`;
-            list.appendChild(listItem);
+            listItem.textContent = `Nombre: ${name}, Cotización del día: ${volume_1day_usd.toFixed(2)} USD, Cotización por hora: ${volume_1hrs_usd.toFixed(2)} USD`;
+            return listItem;
         });
+        
+        // Añadir todos los elementos de la lista al DOM
+        items.forEach(item => list.appendChild(item));
     } else {
         const noDataItem = document.createElement('li');
         noDataItem.textContent = 'No se encontraron datos.';
